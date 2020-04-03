@@ -1,0 +1,43 @@
+package com.villejuif.eartheventtraker.network
+
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Deferred
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
+import retrofit2.http.QueryMap
+
+enum class NasaEonetFilter(val value:String){
+    STATUS_OPEN("open"),
+    STATUS_CLOSED("closed"),
+    SOURCE_INCI("inciWeb"),
+    SOURCE_EO("EO"),
+    LIMIT("limit"),
+    DAYS("days")
+}
+
+private const val BASE_URL = "https://eonet.sci.gsfc.nasa.gov/api/v2.1/"
+
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
+
+private val retrofit = Retrofit.Builder()
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .addCallAdapterFactory(CoroutineCallAdapterFactory())
+    .baseUrl(BASE_URL)
+    .build()
+
+interface NasaEonetApiService{
+@GET("events")
+fun getEarthEvents(@QueryMap map:Map<NasaEonetFilter, String> = mapOf( NasaEonetFilter.LIMIT to "5",
+    NasaEonetFilter.DAYS to "30"))
+        : Deferred<List<EonetEvent>>
+}
+
+object NasaEonetApi{
+    val retrofitService : NasaEonetApiService by lazy { retrofit.create(NasaEonetApiService::class.java) }
+}
