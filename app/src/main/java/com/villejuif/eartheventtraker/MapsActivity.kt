@@ -2,6 +2,7 @@ package com.villejuif.eartheventtraker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,6 +29,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        GlobalScope.launch { showEvent() }
+
     }
 
     /**
@@ -46,14 +50,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
 
-        GlobalScope.launch{
+    private suspend fun showEvent(){
+        val nasaEonetEventsDeferred = NasaEonetApi.retrofitService.getEarthEvents()
+        try {
+            Log.d("MapActivity", nasaEonetEventsDeferred.await().events.toString())
 
-            val nasaEonetEventsDeferred = NasaEonetApi.retrofitService.getEarthEvents()
-            try {
-                println(nasaEonetEventsDeferred.await())
-            } catch (e: Exception) {
-            }
+        } catch (e: Exception) {
+            Log.d("MapActivity","NASA EONET Events Failed")
         }
     }
 }

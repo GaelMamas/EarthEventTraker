@@ -7,7 +7,6 @@ import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 enum class NasaEonetFilter(val value:String){
@@ -33,9 +32,9 @@ private val retrofit = Retrofit.Builder()
 
 interface NasaEonetApiService{
 @GET("events")
-fun getEarthEvents(@QueryMap map:Map<NasaEonetFilter, String> = mapOf( NasaEonetFilter.LIMIT to "5",
-    NasaEonetFilter.DAYS to "30"))
-        : Deferred<List<EonetEvent>>
+fun getEarthEvents(@QueryMap map:Map<String, String> = mapOf( NasaEonetFilter.LIMIT.value to "5",
+    NasaEonetFilter.DAYS.value to "30"))
+        : Deferred<NasaEonetModel>
 }
 
 object NasaEonetApi{
