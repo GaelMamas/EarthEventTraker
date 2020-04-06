@@ -11,6 +11,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.villejuif.eartheventtraker.data.DefaultEonetEventRepository
+import com.villejuif.eartheventtraker.data.Result
+import com.villejuif.eartheventtraker.network.EonetEvent
 import com.villejuif.eartheventtraker.network.NasaEonetApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,7 +30,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_maps)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+            .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         GlobalScope.launch { showEvent() }
@@ -52,13 +55,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
-    private suspend fun showEvent(){
-        val nasaEonetEventsDeferred = NasaEonetApi.retrofitService.getEarthEvents()
-        try {
-            Log.d("MapActivity", nasaEonetEventsDeferred.await().events.toString())
+    private suspend fun showEvent() {
+        var nasaEonetEvents = DefaultEonetEventRepository.getRepository(application).getEonetEvents(false)
 
-        } catch (e: Exception) {
-            Log.d("MapActivity","NASA EONET Events Failed")
-        }
+        Log.d("MainActivity", nasaEonetEvents.toString())
+
     }
 }
