@@ -1,6 +1,7 @@
 package com.villejuif.eartheventtraker.data
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.villejuif.eartheventtraker.data.local.EonetEventDatabase
 import com.villejuif.eartheventtraker.data.local.EonetEventsLocalSource
@@ -35,6 +36,8 @@ class DefaultEonetEventRepository private constructor(application: Application){
         eonetEventLocalSource = EonetEventsLocalSource(database.eonetEventDao())
     }
 
+    fun observeEvents(): LiveData<Result<List<EonetEvent>>> = eonetEventLocalSource.observeEvents()
+
     suspend fun getEonetEvents(forceUpdate: Boolean = false):Result<List<EonetEvent>?>{
         if(forceUpdate){
             try {
@@ -45,6 +48,8 @@ class DefaultEonetEventRepository private constructor(application: Application){
         }
         return eonetEventLocalSource.getEonetEvents()
     }
+
+    suspend fun refreshEvents() = updateEonetEventsFromRemoteSource()
 
     private suspend fun updateEonetEventsFromRemoteSource(){
         val remoteEonetEvents = eonetEventRemoteSource.getEonetEvents()

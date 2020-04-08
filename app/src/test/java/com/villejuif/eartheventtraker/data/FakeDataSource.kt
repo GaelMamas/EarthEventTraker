@@ -1,5 +1,6 @@
 package com.villejuif.eartheventtraker.data
 
+import androidx.lifecycle.LiveData
 import com.villejuif.eartheventtraker.network.EonetEvent
 import java.lang.Exception
 
@@ -8,6 +9,10 @@ class FakeDataSource(var events: MutableList<EonetEvent>? = mutableListOf()) : E
         events?.let { return Result.Success(it) }
 
         return Result.Error(Exception("Events not found"))
+    }
+
+    override fun observeEvents(): LiveData<Result<List<EonetEvent>>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override suspend fun deleteEonetEvent(eventID: String) {

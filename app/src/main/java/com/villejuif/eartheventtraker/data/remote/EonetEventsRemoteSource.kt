@@ -1,5 +1,6 @@
 package com.villejuif.eartheventtraker.data.remote
 
+import androidx.lifecycle.LiveData
 import com.villejuif.eartheventtraker.data.EonetEventsSource
 import com.villejuif.eartheventtraker.data.Result
 import com.villejuif.eartheventtraker.network.EonetEvent
@@ -16,6 +17,10 @@ object EonetEventsRemoteSource :
         }
 
         return result
+    }
+
+    override fun observeEvents(): LiveData<Result<List<EonetEvent>>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override suspend fun deleteEonetEvent(eventID: String) {

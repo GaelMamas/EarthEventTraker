@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/earthEventsFragment">
+
+    <fragment
+        android:id="@+id/earthEventsFragment"
+        android:name="com.villejuif.eartheventtraker.events.EarthEventsFragment"
+        android:label="EarthEventsFragment"
+        tools:layout="@layout/fragment_earth_events"/>
+</navigation>
