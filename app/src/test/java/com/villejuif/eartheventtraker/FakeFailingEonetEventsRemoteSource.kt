@@ -7,7 +7,7 @@ import com.villejuif.eartheventtraker.network.EonetEvent
 import java.lang.Exception
 
 object FakeFailingEonetEventsRemoteSource : EonetEventsSource {
-    override suspend fun getEonetEvents(): Result<List<EonetEvent>?> {
+    override suspend fun getEonetEvents(): Result<List<EonetEvent>> {
         return Result.Error(Exception("Test"))
     }
 

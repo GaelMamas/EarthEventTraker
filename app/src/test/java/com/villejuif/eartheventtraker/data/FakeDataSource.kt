@@ -5,7 +5,7 @@ import com.villejuif.eartheventtraker.network.EonetEvent
 import java.lang.Exception
 
 class FakeDataSource(var events: MutableList<EonetEvent>? = mutableListOf()) : EonetEventsSource{
-    override suspend fun getEonetEvents(): Result<List<EonetEvent>?> {
+    override suspend fun getEonetEvents(): Result<List<EonetEvent>> {
         events?.let { return Result.Success(it) }
 
         return Result.Error(Exception("Events not found"))

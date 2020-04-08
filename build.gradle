@@ -15,6 +15,7 @@ buildscript {
         archLifecycleVersion = '2.2.0-alpha01'
         navigationVersion = "2.1.0-alpha06"
         constraintVersion = '2.0.0-beta4'
+        archTestingVersion = '2.0.0'
     }
     repositories {
         google()

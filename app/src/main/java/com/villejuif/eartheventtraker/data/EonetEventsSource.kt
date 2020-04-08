@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.villejuif.eartheventtraker.network.EonetEvent
 
 interface EonetEventsSource {
-    suspend fun getEonetEvents(): Result<List<EonetEvent>?>
+    suspend fun getEonetEvents(): Result<List<EonetEvent>>
 
     fun observeEvents(): LiveData<Result<List<EonetEvent>>>
 

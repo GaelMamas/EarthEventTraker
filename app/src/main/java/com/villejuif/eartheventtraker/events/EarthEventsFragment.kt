@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.villejuif.eartheventtraker.EonetEventsApplication
 import com.villejuif.eartheventtraker.R
 import com.villejuif.eartheventtraker.databinding.FragmentEarthEventsListBinding
 
@@ -22,7 +23,9 @@ import com.villejuif.eartheventtraker.databinding.FragmentEarthEventsListBinding
  */
 class EarthEventsFragment : Fragment() {
 
-    private val viewModel: EarthEventsViewModel by viewModels<EarthEventsViewModel>()
+    private val viewModel: EarthEventsViewModel by viewModels(){
+        EarthEventsViewModelFactory((requireContext().applicationContext as EonetEventsApplication).defaultRepository)
+    }
 
     private lateinit var viewDataBinding: FragmentEarthEventsListBinding
 

@@ -1,19 +1,15 @@
 package com.villejuif.eartheventtraker.events
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.villejuif.eartheventtraker.data.DefaultEonetEventRepository
+import com.villejuif.eartheventtraker.EonetRepository
 import com.villejuif.eartheventtraker.data.Result
 import com.villejuif.eartheventtraker.network.EonetEvent
 import kotlinx.coroutines.launch
 
 enum class EarthEventsStatus {LOADING, ERROR, DONE}
 
-class EarthEventsViewModel(application: Application):AndroidViewModel(application) {
-
-
-    private val defaultRepository = DefaultEonetEventRepository.getRepository(application)
+class EarthEventsViewModel(private val defaultRepository: EonetRepository):ViewModel() {
 
     private val _forceUpdate = MutableLiveData<Boolean>()
 
@@ -24,10 +20,8 @@ class EarthEventsViewModel(application: Application):AndroidViewModel(applicatio
             viewModelScope.launch{
                 try {
                     defaultRepository.refreshEvents()
-                    _status.value = EarthEventsStatus.DONE
                 }catch (e: Exception){
                     Log.e("EarthEventsViewModel", e.message!!)
-                    _status.value = EarthEventsStatus.ERROR
                 }
                 _dataLoading.value = false
             }
@@ -48,10 +42,11 @@ class EarthEventsViewModel(application: Application):AndroidViewModel(applicatio
     val status: LiveData<EarthEventsStatus> = _status
 
     init {
-        loadEvents(true)
+        loadEvents()
     }
 
-    private fun loadEvents(forceUpdate: Boolean) {
+    private fun loadEvents(forceUpdate: Boolean = true) {
+        _status.value = EarthEventsStatus.DONE
         _forceUpdate.value = forceUpdate
     }
 
@@ -60,10 +55,14 @@ class EarthEventsViewModel(application: Application):AndroidViewModel(applicatio
 
         if(events is Result.Success){
             isDataLoadingError.value = false
-            viewModelScope.launch { result.value = events.data}
+            viewModelScope.launch {
+                result.value = events.data
+                _status.value = EarthEventsStatus.DONE
+            }
         }else{
             result.value = emptyList()
             isDataLoadingError.value = true
+            _status.value = EarthEventsStatus.ERROR
         }
 
         return result
@@ -74,4 +73,12 @@ class EarthEventsViewModel(application: Application):AndroidViewModel(applicatio
     }
 
 
+}
+
+@Suppress("UNCHECKED_CAST")
+class EarthEventsViewModelFactory (
+    private val defaultRepository: EonetRepository
+) : ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel> create(modelClass: Class<T>) =
+        (EarthEventsViewModel(defaultRepository) as T)
 }

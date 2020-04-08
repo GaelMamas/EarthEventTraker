@@ -43,11 +43,11 @@ fun setTextDate(textView: TextView, geometries: List<EonetGeometry>){
 }
 
 @BindingAdapter("earthEventsApiStatus")
-fun bindStatus(statusImageView: ImageView, status: EarthEventsStatus?) {
+fun bindStatus(statusImageView: ImageView, status: EarthEventsStatus) {
     when (status) {
         EarthEventsStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_loading)
+                statusImageView.visibility = View.VISIBLE
+                statusImageView.setImageResource(R.drawable.ic_loading)
         }
         EarthEventsStatus.ERROR -> {
             statusImageView.visibility = View.VISIBLE
@@ -67,12 +67,12 @@ private fun text(sources: List<EonetSource>): String {
 
         sources.forEach { source ->
             run {
-                if (stringBuilder.isNotEmpty()) stringBuilder.append(", ")
+                if (stringBuilder.isNotEmpty()) stringBuilder.append(" and ")
                 stringBuilder.append(Uri.parse(source.url).host)
             }
         }
 
-        stringBuilder.toString()
+        "from ${stringBuilder.toString()}"
     }
 }
 

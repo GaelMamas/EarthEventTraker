@@ -1,44 +1,18 @@
 package com.villejuif.eartheventtraker.data
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.room.Room
-import com.villejuif.eartheventtraker.data.local.EonetEventDatabase
-import com.villejuif.eartheventtraker.data.local.EonetEventsLocalSource
-import com.villejuif.eartheventtraker.data.remote.EonetEventsRemoteSource
+import com.villejuif.eartheventtraker.EonetRepository
 import com.villejuif.eartheventtraker.network.EonetEvent
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class DefaultEonetEventRepository private constructor(application: Application){
+class DefaultEonetEventRepository(private val eonetEventRemoteSource : EonetEventsSource,
+                                                      private val eonetEventLocalSource : EonetEventsSource) : EonetRepository{
 
-    private val eonetEventRemoteSource : EonetEventsSource
-    private val eonetEventLocalSource : EonetEventsSource
+    override fun observeEvents(): LiveData<Result<List<EonetEvent>>> = eonetEventLocalSource.observeEvents()
 
-    companion object{
-        @Volatile
-        private var INSTANCE: DefaultEonetEventRepository? = null
-
-        fun getRepository(app : Application):DefaultEonetEventRepository{
-            return INSTANCE ?:synchronized(this){
-                DefaultEonetEventRepository(app).also { INSTANCE = it }
-            }
-        }
-    }
-
-    init {
-        val database = Room.databaseBuilder(application.applicationContext,
-            EonetEventDatabase::class.java, "EonetEvents.db")
-            .build()
-
-        eonetEventRemoteSource = EonetEventsRemoteSource
-        eonetEventLocalSource = EonetEventsLocalSource(database.eonetEventDao())
-    }
-
-    fun observeEvents(): LiveData<Result<List<EonetEvent>>> = eonetEventLocalSource.observeEvents()
-
-    suspend fun getEonetEvents(forceUpdate: Boolean = false):Result<List<EonetEvent>?>{
+    override suspend fun getEonetEvents(forceUpdate: Boolean):Result<List<EonetEvent>>{
         if(forceUpdate){
             try {
                 updateEonetEventsFromRemoteSource()
@@ -49,7 +23,7 @@ class DefaultEonetEventRepository private constructor(application: Application){
         return eonetEventLocalSource.getEonetEvents()
     }
 
-    suspend fun refreshEvents() = updateEonetEventsFromRemoteSource()
+    override suspend fun refreshEvents() = updateEonetEventsFromRemoteSource()
 
     private suspend fun updateEonetEventsFromRemoteSource(){
         val remoteEonetEvents = eonetEventRemoteSource.getEonetEvents()
@@ -71,13 +45,13 @@ class DefaultEonetEventRepository private constructor(application: Application){
         }
     }
 
-    suspend fun deleteEonetEvent(eventID:String){
+    override suspend fun deleteEonetEvent(eventID:String){
         coroutineScope{
             launch { eonetEventLocalSource.deleteEonetEvent(eventID) }
         }
     }
 
-    suspend fun getEonetEventWithId(eventID:String):Result<EonetEvent>{
+    override suspend fun getEonetEventWithId(eventID:String):Result<EonetEvent>{
         return eonetEventLocalSource.getEonetEvent(eventID)
     }
 

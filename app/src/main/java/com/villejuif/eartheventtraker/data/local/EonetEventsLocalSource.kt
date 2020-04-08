@@ -16,7 +16,7 @@ class EonetEventsLocalSource internal constructor(
 ): EonetEventsSource {
 
 
-    override suspend fun getEonetEvents(): Result<List<EonetEvent>?> {
+    override suspend fun getEonetEvents(): Result<List<EonetEvent>> {
         return Result.Success(eonetEventDao.getEvents())
     }
 
