@@ -33,7 +33,7 @@ private val retrofit = Retrofit.Builder()
 
 interface NasaEonetApiService{
 @GET("events")
-fun getEarthEvents(@QueryMap map:Map<String, String> = mapOf( NasaEonetFilter.LIMIT.value to "5",
+fun getEarthEvents(@QueryMap map:Map<String, String> = mapOf( NasaEonetFilter.LIMIT.value to "30",
     NasaEonetFilter.DAYS.value to "30"))
         : Deferred<NasaEonetModel>
 }

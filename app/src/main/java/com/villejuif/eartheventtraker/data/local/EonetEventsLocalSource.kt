@@ -1,5 +1,7 @@
 package com.villejuif.eartheventtraker.data.local
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.villejuif.eartheventtraker.data.EonetEventsSource
 import com.villejuif.eartheventtraker.data.Result
 import com.villejuif.eartheventtraker.network.EonetEvent
@@ -14,9 +16,11 @@ class EonetEventsLocalSource internal constructor(
 ): EonetEventsSource {
 
 
-    override suspend fun getEonetEvents(): Result<List<EonetEvent>?> {
+    override suspend fun getEonetEvents(): Result<List<EonetEvent>> {
         return Result.Success(eonetEventDao.getEvents())
     }
+
+    override fun observeEvents(): LiveData<Result<List<EonetEvent>>> = eonetEventDao.observeEvents().map { Result.Success(it) }
 
     override suspend fun deleteEonetEvent(eventID : String) = withContext<Unit>(ioDispatcher){
         eonetEventDao.deleteEventkById(eventID)

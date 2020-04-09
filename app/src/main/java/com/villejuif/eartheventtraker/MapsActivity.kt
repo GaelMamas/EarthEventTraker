@@ -2,8 +2,13 @@ package com.villejuif.eartheventtraker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Toast
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -11,6 +16,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.navigation.NavigationView
 import com.villejuif.eartheventtraker.data.DefaultEonetEventRepository
 import com.villejuif.eartheventtraker.data.Result
 import com.villejuif.eartheventtraker.network.EonetEvent
@@ -21,7 +27,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.lang.Exception
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+/*, OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
@@ -61,4 +67,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         Log.d("MainActivity", nasaEonetEvents.toString())
 
     }
+}*/
+
+class MapsActivity : AppCompatActivity(){
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_maps)
+
+    }
+
 }
