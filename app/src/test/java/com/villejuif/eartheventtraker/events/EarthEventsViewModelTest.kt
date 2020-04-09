@@ -1,15 +1,12 @@
 package com.villejuif.eartheventtraker.events
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.google.common.base.CharMatcher.`is`
 import com.google.common.truth.Truth.assertThat
 import com.villejuif.eartheventtraker.MainCoroutineRule
 import com.villejuif.eartheventtraker.data.FakeEonetRepository
 import com.villejuif.eartheventtraker.getOrAwaitValue
 import com.villejuif.eartheventtraker.network.EonetEvent
-import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -22,10 +19,6 @@ class EarthEventsViewModelTest {
     private lateinit var defaultRepository: FakeEonetRepository
 
     private val eonetEvent1 = EonetEvent(id = "id1", title = "T1")
-    private val eonetEvent2 = EonetEvent(id = "id2", title = "T2")
-    private val eonetEvent3 = EonetEvent(id = "id3", title = "T3")
-
-    private val newEonetEvent = EonetEvent(id = "id new", title = "Title new")
 
     @ExperimentalCoroutinesApi
     @get:Rule
@@ -42,13 +35,24 @@ class EarthEventsViewModelTest {
     }
 
     @Test
-    fun status_allTheStatuses(){
+    fun status_allTheStatuses() {
 
-        defaultRepository.setReturnError(true)
+        assertThat(highlightApiStatus(true)).isEqualTo(EarthEventsStatus.ERROR)
+        assertThat(highlightApiStatus(false)).isEqualTo(EarthEventsStatus.ERROR)
 
-        val status = viewModel.status.getOrAwaitValue()
+        defaultRepository.addEvents(eonetEvent1)
 
-        assertThat(status).isEqualTo(EarthEventsStatus.ERROR)
+        assertThat(highlightApiStatus(false)).isEqualTo(EarthEventsStatus.DONE)
+
+        assertThat(viewModel.items.getOrAwaitValue()[0]).isEqualTo(eonetEvent1)
+    }
+
+    private fun highlightApiStatus(error : Boolean) : EarthEventsStatus{
+        defaultRepository.setReturnError(error)
+
+        viewModel.items.getOrAwaitValue()
+
+        return viewModel.status.getOrAwaitValue()
     }
 
 
