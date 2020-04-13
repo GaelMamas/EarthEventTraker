@@ -41,6 +41,9 @@ class EarthEventsViewModel(private val defaultRepository: EonetRepository):ViewM
     private val _status = MutableLiveData<EarthEventsStatus>()
     val status: LiveData<EarthEventsStatus> = _status
 
+    private val _clickedEvent = MutableLiveData<EonetEvent>()
+    val clickedEvent: LiveData<EonetEvent> = _clickedEvent
+
     init {
         loadEvents()
     }
@@ -70,6 +73,10 @@ class EarthEventsViewModel(private val defaultRepository: EonetRepository):ViewM
 
     fun refresh(){
         _forceUpdate.value = true
+    }
+
+    fun onClickEvent(event: EonetEvent){
+        _clickedEvent.value = event
     }
 
 
