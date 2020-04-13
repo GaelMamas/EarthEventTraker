@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.villejuif.eartheventtraker.EonetEventsApplication
 import com.villejuif.eartheventtraker.R
@@ -47,7 +50,13 @@ class EarthEventsFragment : Fragment() {
         setupListAdapter()
 
         setupSwipeRefreshLayout()
+        setupNavigation()
 
+    }
+
+    private fun setupNavigation() {
+        viewModel.clickedEvent.observe(this,
+            Observer { findNavController().navigate(R.id.action_earthEventsFragment_to_mapsFragment) })
     }
 
     private fun setupSwipeRefreshLayout() {

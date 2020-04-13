@@ -9,5 +9,19 @@
         android:id="@+id/earthEventsFragment"
         android:name="com.villejuif.eartheventtraker.events.EarthEventsFragment"
         android:label="EarthEventsFragment"
-        tools:layout="@layout/fragment_earth_events"/>
+        tools:layout="@layout/fragment_earth_events">
+        <action
+            android:id="@+id/action_earthEventsFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.villejuif.eartheventtraker.MapsFragment"
+        android:label="MapsFragment" >
+        <action
+            android:id="@+id/action_mapsFragment_to_earthEventsFragment"
+            app:popUpTo="@id/earthEventsFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/earthEventsFragment" />
+    </fragment>
 </navigation>

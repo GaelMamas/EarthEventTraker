@@ -4,6 +4,14 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file(var)
+            storePassword var1
+            keyAlias = var2
+            keyPassword var3
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
 
@@ -18,9 +26,16 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable = true
+            signingConfig signingConfigs.release
+            minifyEnabled = true
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
     }
 
@@ -38,7 +53,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
     implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'

@@ -13,7 +13,6 @@ import com.villejuif.eartheventtraker.network.EonetGeometry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.core.Is.`is`
 import org.junit.After
 import org.junit.Before
