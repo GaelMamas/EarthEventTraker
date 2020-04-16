@@ -17,7 +17,7 @@ buildscript {
         courtines_test = '1.3.0'
         truthVersion = '0.44'
         archLifecycleVersion = '2.2.0-alpha01'
-        navigationVersion = "2.1.0-alpha06"
+        navigationVersion = '2.3.0-alpha04'
         constraintVersion = '2.0.0-beta4'
         archTestingVersion = '2.0.0'
         espressoVersion = '3.2.0'
@@ -31,11 +31,9 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:3.6.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
     }
 }
 

@@ -1,7 +1,6 @@
 package com.villejuif.eartheventtraker.events
 
 import android.net.Uri
-import android.text.format.DateFormat
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,7 +12,6 @@ import com.villejuif.eartheventtraker.network.EonetCategory
 import com.villejuif.eartheventtraker.network.EonetEvent
 import com.villejuif.eartheventtraker.network.EonetGeometry
 import com.villejuif.eartheventtraker.network.EonetSource
-import java.lang.StringBuilder
 
 
 @BindingAdapter("app:items")
@@ -34,10 +32,10 @@ fun setText(textView: TextView, sources: List<EonetSource>) {
 }
 
 @BindingAdapter("android:text")
-fun setTextDate(textView: TextView, geometries: List<EonetGeometry>){
-    if(geometries.isEmpty()){
+fun setTextDate(textView: TextView, geometries: List<EonetGeometry>) {
+    if (geometries.isEmpty()) {
         textView.text = textView.context.getText(R.string.earth_event_date_no_reported)
-    }else{
+    } else {
         textView.text = geometries[0].date
     }
 }
@@ -46,8 +44,8 @@ fun setTextDate(textView: TextView, geometries: List<EonetGeometry>){
 fun bindStatus(statusImageView: ImageView, status: EarthEventsStatus) {
     when (status) {
         EarthEventsStatus.LOADING -> {
-                statusImageView.visibility = View.VISIBLE
-                statusImageView.setImageResource(R.drawable.ic_loading)
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_loading)
         }
         EarthEventsStatus.ERROR -> {
             statusImageView.visibility = View.VISIBLE
@@ -72,12 +70,12 @@ private fun text(sources: List<EonetSource>): String {
             }
         }
 
-        "from ${stringBuilder.toString()}"
+        "from $stringBuilder"
     }
 }
 
 @DrawableRes
-private fun src(categories: List<EonetCategory>): Int {
+fun src(categories: List<EonetCategory>): Int {
     return when {
         categories.isEmpty() -> {
             R.drawable.ic_unknown

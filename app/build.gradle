@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     signingConfigs {
@@ -44,6 +45,10 @@ android {
         enabledForTests = true
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
 }
 
 dependencies {
@@ -68,6 +73,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
@@ -88,8 +94,11 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
 
-    //Gson
+    // Gson
     implementation "com.google.code.gson:gson:$version_gson"
+
+    // material design components
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
 
     // Test
     testImplementation "junit:junit:$junitVersion"
