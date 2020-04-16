@@ -2,4 +2,5 @@
     <string name="app_name">EarthListener</string>
     <string name="title_activity_maps">@string/app_name</string>
     <string name="earth_event_date_no_reported">No date reported</string>
+    <string name="action_bar_title">Recent Disturbances</string>
 </resources>

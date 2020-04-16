@@ -3,9 +3,21 @@
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.villejuif.eartheventtraker.maps.MapsViewModel" />
+
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <fragment
             android:id="@+id/map"
@@ -13,6 +25,42 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MapsActivity" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent">
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/filter_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_normal"
+                    map:singleSelection="true" />
+
+            </HorizontalScrollView>
+
+            <ProgressBar
+                android:id="@+id/progressbar_Horizontal"
+                style="@style/MyProgressbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_small"
+                android:layout_gravity="top"
+                android:max="100"
+                android:visibility="@{viewmodel.loadingStatus ? View.VISIBLE : View.GONE}"
+                tools:progress="70"
+                tools:visibility="visible" />
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
