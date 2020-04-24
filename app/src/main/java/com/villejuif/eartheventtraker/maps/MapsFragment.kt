@@ -28,6 +28,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.villejuif.eartheventtraker.EonetEventsApplication
 import com.villejuif.eartheventtraker.R
+import com.villejuif.eartheventtraker.analytics.AnalyticsProvider
 import com.villejuif.eartheventtraker.databinding.FragmentMapsBinding
 import com.villejuif.eartheventtraker.events.src
 import com.villejuif.eartheventtraker.network.EonetEvent
@@ -103,6 +104,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
                     chip.setOnCheckedChangeListener { button, isChecked ->
 
+                        if(!isChecked)return@setOnCheckedChangeListener
                         viewModel.currentFilter()?.let {
                             if ( button.text.contains(it)) return@setOnCheckedChangeListener
                         }
@@ -120,6 +122,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                         }
 
                         viewModel.changeFilter(button.tag as String, isChecked)
+
+                        AnalyticsProvider.mapChip(button.text.toString())
 
                     }
 
@@ -193,6 +197,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 val browserIntent = Intent(Intent.ACTION_VIEW)
                 browserIntent.data = Uri.parse(url)
                 activity?.startActivity(browserIntent)
+
+                AnalyticsProvider.mapPOI(it.title,
+                    Uri.parse(url).scheme ?: return@setOnInfoWindowClickListener )
             }
         }
     }

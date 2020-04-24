@@ -1,6 +1,7 @@
 package com.villejuif.eartheventtraker.events
 
 import android.net.Uri
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,6 +9,7 @@ import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.villejuif.eartheventtraker.R
+import com.villejuif.eartheventtraker.analytics.AnalyticsProvider
 import com.villejuif.eartheventtraker.network.EonetCategory
 import com.villejuif.eartheventtraker.network.EonetEvent
 import com.villejuif.eartheventtraker.network.EonetGeometry
@@ -78,36 +80,35 @@ private fun text(sources: List<EonetSource>): String {
 fun src(categories: List<EonetCategory>): Int {
     return when {
         categories.isEmpty() -> {
+            AnalyticsProvider.reportWeirdness("Category_Event", "Category_List_Empty")
             R.drawable.ic_unknown
-            //TODO Fiberbase analytics
         }
         categories.size == 1 -> {
             val category = categories[0].title
             when {
                 category.contains("wildfire", ignoreCase = true) -> {
-                    //TODO Fiberbase analytics
                     R.drawable.ic_flame
                 }
                 category.contains("volcano", ignoreCase = true) -> {
-                    //TODO Fiberbase analytics
                     R.drawable.ic_volcano
                 }
                 category.contains("ice", ignoreCase = true) -> {
-                    //TODO Fiberbase analytics
                     R.drawable.ic_sea_ice
                 }
                 category.contains("storms", ignoreCase = true) -> {
-                    //TODO Fiberbase analytics
                     R.drawable.ic_cyclone
                 }
                 else -> {
-                    //TODO Fiberbase analytics
+                    AnalyticsProvider.reportWeirdness("Category_Event", "$category, unknown")
                     R.drawable.ic_unknown
                 }
             }
         }
         else -> {
-            //TODO Fiberbase analytics
+            AnalyticsProvider.reportWeirdness(
+                "Category_Event",
+                "Multiple, ${TextUtils.join(",", categories)}"
+            )
             R.drawable.ic_caution
         }
     }

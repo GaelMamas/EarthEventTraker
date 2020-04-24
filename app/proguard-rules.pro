@@ -19,3 +19,50 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-ignorewarnings
+-dontoptimize
+
+-keep class com.villejuif.eartheventtraker.** { *; }
+
+-keepattributes *Annotation*
+
+-dontwarn kotlin.**
+-dontwarn androidx.appcompat.widget.**
+
+-keep class com.google.common.base.Preconditions { *; }
+
+-keep class androidx.room.RoomDataBase { *; }
+-keep class androidx.room.Room { *; }
+-keep class android.arch.** { *; }
+
+-dontwarn androidx.databinding.**
+-keep class androidx.databinding.** { *; }
+-keep class * extends android.arch.lifecycle.ViewModel {
+    <init>();
+}
+-keep class * extends android.arch.lifecycle.AndroidViewModel {
+    <init>(android.app.Application);
+}
+
+-keepclassmembers class * {
+    @com.squareup.moshi.FromJson <methods>;
+    @com.squareup.moshi.ToJson <methods>;
+}
+
+-dontwarn org.jetbrains.annotations.**
+
+-dontwarn okhttp3.**
+-dontwarn retrofit2.Platform$Java8
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+-keepclasseswithmembers class * {
+    @com.squareup.moshi.* <methods>;
+}
+-keep @com.squareup.moshi.JsonQualifier interface *
+-dontwarn org.jetbrains.annotations.**
+
+-keep class com.example.myapp.** extends android.support.v4.app.Fragment{}
+-keepnames class kotlinx.** { *; }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "113182053717",
+    "firebase_url": "https://exemplary-torch-273807.firebaseio.com",
+    "project_id": "exemplary-torch-273807",
+    "storage_bucket": "exemplary-torch-273807.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113182053717:android:077437c961f15c90db0bdc",
+        "android_client_info": {
+          "package_name": "com.villejuif.eartheventtraker.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113182053717-eiqlsn6f4m86uofrmtdmfesv0qnmb0aq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYpWnVw9vMb3Vw4CqtgVTiHSZvA4MPx2o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113182053717-eiqlsn6f4m86uofrmtdmfesv0qnmb0aq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
