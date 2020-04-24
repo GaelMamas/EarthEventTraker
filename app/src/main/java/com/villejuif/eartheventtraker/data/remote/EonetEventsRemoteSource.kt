@@ -1,6 +1,7 @@
 package com.villejuif.eartheventtraker.data.remote
 
 import androidx.lifecycle.LiveData
+import com.villejuif.eartheventtraker.analytics.CrashlyticsProvider
 import com.villejuif.eartheventtraker.data.EonetEventsSource
 import com.villejuif.eartheventtraker.data.Result
 import com.villejuif.eartheventtraker.network.EonetEvent
@@ -13,6 +14,7 @@ object EonetEventsRemoteSource :
         result = try {
             Result.Success(NasaEonetApi.retrofitService.getEarthEvents().await().events)
         }catch (e:Exception){
+            CrashlyticsProvider.nonFatalCrash(Throwable(e))
             Result.Error(e)
         }
 

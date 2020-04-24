@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.villejuif.eartheventtraker.analytics.AnalyticsProvider
 import com.villejuif.eartheventtraker.databinding.EarthEventItemBinding
 
 
@@ -33,6 +34,8 @@ class MyEarthEventRecyclerViewAdapter(
             binding.viewmodel = viewModel
             binding.event = item
             binding.executePendingBindings()
+            AnalyticsProvider.reportEarthEvent(item.id, item.categories?.get(0)?.title ?: return,
+                item.geometries[0].date, item.geometries[0].coordinates)
         }
 
         companion object{

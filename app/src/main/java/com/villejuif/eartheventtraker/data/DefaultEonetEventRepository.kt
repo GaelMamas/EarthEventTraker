@@ -31,7 +31,7 @@ class DefaultEonetEventRepository(private val eonetEventRemoteSource : EonetEven
         if(remoteEonetEvents is Result.Success){
 
             eonetEventLocalSource.deleteAllEonetEvents()
-            remoteEonetEvents.data?.forEach { event ->
+            remoteEonetEvents.data.forEach { event ->
 
                 if (event.id.isEmpty() or event.id.isBlank()) return
                 if (event.categories.isNullOrEmpty()) return

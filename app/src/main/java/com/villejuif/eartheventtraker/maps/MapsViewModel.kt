@@ -3,6 +3,7 @@ package com.villejuif.eartheventtraker.maps
 import android.util.Log
 import androidx.lifecycle.*
 import com.villejuif.eartheventtraker.EonetRepository
+import com.villejuif.eartheventtraker.analytics.CrashlyticsProvider
 import com.villejuif.eartheventtraker.data.Result
 import com.villejuif.eartheventtraker.events.EarthEventsStatus
 import com.villejuif.eartheventtraker.network.EonetEvent
@@ -33,6 +34,7 @@ class MapsViewModel(private val defaultRepository: EonetRepository) : ViewModel(
                     try {
                         defaultRepository.refreshEvents()
                     } catch (e: Exception) {
+                        CrashlyticsProvider.nonFatalCrash(Throwable(e))
                         Log.e("EarthEventsViewModel", e.message!!)
                     }
                 }
@@ -68,6 +70,7 @@ class MapsViewModel(private val defaultRepository: EonetRepository) : ViewModel(
                     _requestedItem.value = result.data
                 }
             } catch (e: Exception) {
+                CrashlyticsProvider.nonFatalCrash(Throwable(e))
                 Log.e("MapsViewModel", e.message!!)
             }
 
