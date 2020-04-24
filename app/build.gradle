@@ -1,8 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file(var)
+            storePassword var1
+            keyAlias = var2
+            keyPassword var3
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
 
@@ -10,27 +22,62 @@ android {
         applicationId "com.villejuif.eartheventtraker"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 100
+        versionName "1.0-beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
         }
+        release {
+            debuggable false
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+        enabledForTests = true
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
 }
 
 dependencies {
+    // App dependencies
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
     implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta04'
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.annotation:annotation:$androidXAnnotations"
+    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+
+
+    implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
@@ -41,14 +88,36 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
 
     // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_kotlin_coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
 
     // Retrofit Coroutines Support
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
 
+    // Architecture Components
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
 
-    testImplementation 'junit:junit:4.12'
+    // Gson
+    implementation "com.google.code.gson:gson:$version_gson"
+
+    // material design components
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
+
+    // Test
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$courtines_test"
+    testImplementation "com.google.truth:truth:$truthVersion"
+    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+
+
+    androidTestImplementation "junit:junit:$junitVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
+    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$dexMakerVersion"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$courtines_test"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+
 }

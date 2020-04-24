@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/earthEventsFragment">
+
+    <fragment
+        android:id="@+id/earthEventsFragment"
+        android:name="com.villejuif.eartheventtraker.events.EarthEventsFragment"
+        android:label="@string/action_bar_title"
+        tools:layout="@layout/fragment_earth_events">
+        <action
+            android:id="@+id/action_earthEventsFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+        <argument
+            android:name="eonetEventID"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.villejuif.eartheventtraker.maps.MapsFragment"
+        android:label="@string/action_bar_title" >
+        <action
+            android:id="@+id/action_mapsFragment_to_earthEventsFragment"
+            app:popUpTo="@id/earthEventsFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/earthEventsFragment" />
+    </fragment>
+</navigation>

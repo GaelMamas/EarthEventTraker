@@ -3,6 +3,7 @@ package com.villejuif.eartheventtraker.network
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.villejuif.eartheventtraker.data.Result
 import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -32,8 +33,8 @@ private val retrofit = Retrofit.Builder()
 
 interface NasaEonetApiService{
 @GET("events")
-fun getEarthEvents(@QueryMap map:Map<String, String> = mapOf( NasaEonetFilter.LIMIT.value to "5",
-    NasaEonetFilter.DAYS.value to "30"))
+fun getEarthEvents(@QueryMap map:Map<String, String> = mapOf( NasaEonetFilter.LIMIT.value to "30",
+    NasaEonetFilter.DAYS.value to "50", "status" to NasaEonetFilter.STATUS_OPEN.value))
         : Deferred<NasaEonetModel>
 }
 
