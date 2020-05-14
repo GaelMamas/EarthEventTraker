@@ -6,7 +6,7 @@ ext {
 }
 buildscript {
     ext {
-        kotlin_version = '1.3.70'
+        kotlin_version = '1.3.71'
         version_moshi = "1.8.0"
         version_kotlin_coroutines = "1.1.0"
         version_retrofit = "2.5.0"
@@ -17,7 +17,7 @@ buildscript {
         courtines_test = '1.3.0'
         truthVersion = '0.44'
         archLifecycleVersion = '2.2.0'
-        navigationVersion = '2.3.0-alpha05'
+        navigationVersion = '2.3.0-alpha06'
         constraintVersion = '2.0.0-beta4'
         archTestingVersion = '2.0.0'
         espressoVersion = '3.2.0'
@@ -31,11 +31,11 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         classpath 'com.google.gms:google-services:4.3.3'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.0.0-beta04'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.0'
     }
 }
 
