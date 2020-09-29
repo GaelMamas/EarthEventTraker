@@ -1,19 +1,21 @@
 package com.villejuif.eartheventtraker.maps
 
+import android.Manifest
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
+import androidx.core.app.ActivityCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,6 +34,7 @@ import com.villejuif.eartheventtraker.analytics.AnalyticsProvider
 import com.villejuif.eartheventtraker.databinding.FragmentMapsBinding
 import com.villejuif.eartheventtraker.events.src
 import com.villejuif.eartheventtraker.network.EonetEvent
+import kotlinx.coroutines.GlobalScope
 
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
@@ -238,5 +241,27 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
         drawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+    private fun setupPermissions(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityCompat.requestPermissions(
+                activity ?: return, arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.VIBRATE,
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+                    Manifest.permission.WAKE_LOCK,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_NETWORK_STATE,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.CHANGE_WIFI_STATE,
+                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.SYSTEM_ALERT_WINDOW,
+                    Manifest.permission.READ_PHONE_STATE
+                ), 1
+            )
+        }
     }
 }
