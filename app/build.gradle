@@ -16,14 +16,14 @@ android {
         }
     }
     compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.villejuif.eartheventtraker"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 102
-        versionName "1.0-beta3"
+        versionCode 103
+        versionName "1.0-beta4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,9 +42,8 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
-        enabledForTests = true
+    buildFeatures {
+        dataBinding true
     }
 
     kotlinOptions {
