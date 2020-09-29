@@ -1,8 +1,8 @@
 ext {
-    var = 'C:\\Users\\admin\\Documents\\AndroidProjects\\Steward KeyStore\\earth_listener_keystore.jks'
-    var1 = 'Yusuf2020'
-    var2 = 'Villejuif'
-    var3 = 'Yusuf2020'
+    var = 'C:\\\\\\\\\\\\.jks'
+    var1 = ''
+    var2 = ''
+    var3 = ''
 }
 buildscript {
     ext {
@@ -31,11 +31,11 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         classpath 'com.google.gms:google-services:4.3.3'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
     }
 }
 
